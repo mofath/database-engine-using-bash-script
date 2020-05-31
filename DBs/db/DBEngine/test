@@ -1,0 +1,71 @@
+#!/bin/bash
+
+DBName=$1
+tblName=$2
+id=0
+array()
+while 
+	clear
+	echo ""
+	echo ""
+	while
+	printf "${BYellow}"
+	echo -ne  "	SELECT FROM" printf "${cf}" 
+	read array[i]
+	
+
+
+	
+	tblList=( $(ls -p ./DBs/$DBName | grep -v /) )
+
+	for tbl in  ${tblList[*]}
+	do
+		if [ "$tblName" = "$tbl" ]; then
+			header=$(sed -n 1p ./DBs/db/$tblName)
+
+			printf "$id"  >> ./DBs/$DBName/$tblName
+			IFS=$','
+			for col in $header
+			do
+				if [[ $col = id ]]
+				then
+					continue
+				fi
+				read -p "$col : " value
+				printf ", $value"  >> ./DBs/$DBName/$tblName
+			done
+			unset IFS
+			printf "\n" >> ./DBs/$DBName/$tblName
+			echo ""
+			echo "Data inserted successfully"
+			((isExist++))
+			break
+		fi
+	done
+
+	if [ "$isExist" -eq  0 ]; then
+		echo ""	
+		echo "No Such table"
+		read
+		clear
+	fi
+
+	
+	echo ""
+	echo "	1. To inset new record"
+	echo "	2. Press any key to get back for the Current Database Menu"
+
+	read opt
+
+	case $opt in
+		1)
+			. ./tbl_insert.sh $DBName
+			break ;;
+		2)
+			. ./DB_menu.sh $DBName
+			break ;;
+	esac
+
+do
+	:
+done

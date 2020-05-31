@@ -1,0 +1,67 @@
+#!/bin/bash
+
+i=0
+tblName=tbl1
+DBName=db
+colName=()
+value=""
+header=$(sed -n 1p ./DBs/$DBName/$tblName)
+k=1
+r="$"
+f=":"
+j=0
+o=0
+in=0
+while :
+do	
+
+
+			
+		clear
+		echo ""
+		echo ""
+		while true; do
+			echo -ne  "	SELECT FROM $tblName   "
+			read col[i] 
+			echo "	('q' for quit)"
+			((i=i+1))
+			IFS=$','
+			for val in $header
+			do
+				echo "$val"
+				for col in $col
+				do
+					echo "$col"
+					if [[ $val = $col ]]
+					then
+						echo "$col"	
+						echo "$col"	
+						value=$value$r$j$f
+						echo "$value"
+					fi
+					((in=in+1))
+				done
+				((o=o+1))
+			done
+			unset IFS
+			
+			if [[ $col[i] = 'q' ]]
+			then
+				break
+			fi
+		done
+
+		IFS=$':'
+		for x in $value
+		do
+			$Sp=" "
+			$var = $var$sp$name
+		done
+
+		unset IFS
+		echo "$var"
+
+	read
+done
+
+
